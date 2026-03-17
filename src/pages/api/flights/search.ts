@@ -3,6 +3,7 @@ import type { APIRoute } from 'astro';
 export const GET: APIRoute = async ({ request }) => {
   try {
     const token = import.meta.env.TRAVELPAYOUTS_API_TOKEN;
+
     if (!token) {
       return new Response(
         JSON.stringify({ error: 'TRAVELPAYOUTS_API_TOKEN is missing' }),
@@ -28,6 +29,7 @@ export const GET: APIRoute = async ({ request }) => {
     const apiUrl = `https://api.travelpayouts.com/aviasales/v3/prices_for_dates?origin=${origin}&destination=${destination}&departure_at=${startDate}&return_at=${endDate}&token=${token}`;
 
     const response = await fetch(apiUrl);
+
     if (!response.ok) {
       const text = await response.text();
       return new Response(
@@ -57,6 +59,7 @@ export const GET: APIRoute = async ({ request }) => {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     });
+
   } catch (err: any) {
     return new Response(
       JSON.stringify({
